@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "cd job-market && npm ci && npm run build",
+  "outputDirectory": "job-market/out",
+  "installCommand": "cd job-market && npm ci",
+  "framework": null
+}
