@@ -29,7 +29,7 @@ export function TakeawaysSection() {
       className="section-shell relative overflow-hidden"
     >
       <div
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 z-0 bg-cover bg-center"
         style={{ backgroundImage: "url(/images/hero-background.png)" }}
         aria-hidden
       />

@@ -18,7 +18,7 @@ export function HeroSection() {
       className="relative -mx-6 flex min-h-[calc(100vh-var(--nav-height))] flex-col justify-center overflow-hidden pb-8 md:-mx-8"
     >
       <div
-        className="absolute inset-0 bg-cover bg-center"
+        className="absolute inset-0 z-0 bg-cover bg-center"
         style={{ backgroundImage: "url(/images/hero-background.png)" }}
         aria-hidden
       />
