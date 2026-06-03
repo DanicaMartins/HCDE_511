@@ -106,11 +106,14 @@ export function CursorPixelReveal({
     const canvas = canvasRef.current;
     if (!section || !canvas) return;
 
+    const ctx = canvas.getContext("2d", { alpha: true });
+    if (!ctx) return;
+
     let rafId = 0;
     let cancelled = false;
     const pixels = new Map<string, PixelStamp>();
     let lastStampAt = 0;
-    let size = { width: 0, height: 0, cols: 0, rows: 0, maxActiveCells: 0 };
+    let size = { width: 0, height: 0, maxActiveCells: 0 };
 
     const reducedMotion =
       typeof window !== "undefined" &&
@@ -122,14 +125,11 @@ export function CursorPixelReveal({
       canvas.height = Math.floor(height * dpr);
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
-      const cols = Math.ceil(width / CELL_SIZE);
-      const rows = Math.ceil(height / CELL_SIZE);
+      const cellCount = Math.ceil(width / CELL_SIZE) * Math.ceil(height / CELL_SIZE);
       size = {
         width,
         height,
-        cols,
-        rows,
-        maxActiveCells: Math.max(1, Math.floor(cols * rows * MAX_REVEAL_FRACTION)),
+        maxActiveCells: Math.max(1, Math.floor(cellCount * MAX_REVEAL_FRACTION)),
       };
       pixels.clear();
     };
@@ -140,44 +140,29 @@ export function CursorPixelReveal({
       );
 
     const draw = (now: number) => {
-      const ctx = canvas.getContext("2d");
-      if (!ctx || size.width <= 0 || size.height <= 0) return;
+      if (size.width <= 0 || size.height <= 0) return;
 
       const dpr = window.devicePixelRatio || 1;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.clearRect(0, 0, size.width, size.height);
+      ctx.globalCompositeOperation = "source-over";
+      ctx.fillStyle = OVERLAY_COLOR;
+      ctx.fillRect(0, 0, size.width, size.height);
 
-      if (reducedMotion) {
-        ctx.fillStyle = OVERLAY_COLOR;
-        ctx.fillRect(0, 0, size.width, size.height);
-        return;
-      }
+      if (reducedMotion) return;
 
-      for (let row = 0; row < size.rows; row += 1) {
-        for (let col = 0; col < size.cols; col += 1) {
-          const key = cellKey(col, row);
-          const stamp = pixels.get(key);
-          let overlayAlpha = 1;
-
-          if (stamp) {
-            const age = now - stamp.t;
-            if (age >= FADE_MS) {
-              pixels.delete(key);
-            } else {
-              overlayAlpha = age / FADE_MS;
-            }
-          }
-
-          if (overlayAlpha <= 0) continue;
-
-          const { px, py, pw, ph } = cellPixelRect(col, row);
-          ctx.fillStyle =
-            overlayAlpha >= 1
-              ? OVERLAY_COLOR
-              : `rgba(255,255,255,${overlayAlpha})`;
-          ctx.fillRect(px, py, pw, ph);
+      ctx.globalCompositeOperation = "destination-out";
+      Array.from(pixels.entries()).forEach(([key, pixel]) => {
+        const age = now - pixel.t;
+        if (age >= FADE_MS) {
+          pixels.delete(key);
+          return;
         }
-      }
+
+        const strength = 1 - age / FADE_MS;
+        ctx.fillStyle = `rgba(0,0,0,${strength})`;
+        ctx.fillRect(pixel.px, pixel.py, pixel.pw, pixel.ph);
+      });
+      ctx.globalCompositeOperation = "source-over";
     };
 
     const tick = (now: number) => {
@@ -238,6 +223,7 @@ export function CursorPixelReveal({
     });
 
     resizeObserver.observe(section);
+    section.addEventListener("pointermove", onPointerMove, { capture: true, passive: true });
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     setup();
 
@@ -245,6 +231,7 @@ export function CursorPixelReveal({
       cancelled = true;
       window.cancelAnimationFrame(rafId);
       resizeObserver.disconnect();
+      section.removeEventListener("pointermove", onPointerMove, { capture: true });
       window.removeEventListener("pointermove", onPointerMove);
     };
   }, [excludeSelector, sectionRef]);

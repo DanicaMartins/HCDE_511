@@ -26,14 +26,15 @@ export function TakeawaysSection() {
     <section
       ref={sectionRef}
       id="takeaways"
-      className="section-shell relative overflow-hidden"
+      className="section-shell relative isolate overflow-hidden"
     >
-      <div
-        className="absolute inset-0 z-0 bg-cover bg-center"
-        style={{ backgroundImage: "url(/images/hero-background.png)" }}
-        aria-hidden
-      />
-      <CursorPixelReveal sectionRef={sectionRef} />
+      <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden>
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url(/images/hero-background.png)" }}
+        />
+        <CursorPixelReveal sectionRef={sectionRef} />
+      </div>
 
       <div className="relative z-10">
         <div data-cursor-exclude>
