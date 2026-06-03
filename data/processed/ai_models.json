@@ -1,0 +1,898 @@
+[
+  {
+    "model": "Go-explore",
+    "org": "OpenAI",
+    "domain": "Games",
+    "date": "2020-04-27",
+    "month": "2020-04"
+  },
+  {
+    "model": "GPT-3 175B (davinci)",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2020-05-28",
+    "month": "2020-05"
+  },
+  {
+    "model": "GPT3-6.7B (rerun of original)",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2020-05-28",
+    "month": "2020-05"
+  },
+  {
+    "model": "iGPT-L",
+    "org": "OpenAI",
+    "domain": "Image generation,Vision",
+    "date": "2020-06-17",
+    "month": "2020-06"
+  },
+  {
+    "model": "iGPT-XL",
+    "org": "OpenAI",
+    "domain": "Vision,Image generation",
+    "date": "2020-06-17",
+    "month": "2020-06"
+  },
+  {
+    "model": "GPT-3 13B",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2020-06-22",
+    "month": "2020-06"
+  },
+  {
+    "model": "GPT-3 2.7B",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2020-06-22",
+    "month": "2020-06"
+  },
+  {
+    "model": "GPT-3 6.7B",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2020-06-22",
+    "month": "2020-06"
+  },
+  {
+    "model": "GPT-3 Large",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2020-06-22",
+    "month": "2020-06"
+  },
+  {
+    "model": "GPT-3 Medium",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2020-06-22",
+    "month": "2020-06"
+  },
+  {
+    "model": "GPT-3 Small",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2020-06-22",
+    "month": "2020-06"
+  },
+  {
+    "model": "GPT-3 XL",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2020-06-22",
+    "month": "2020-06"
+  },
+  {
+    "model": "CLIP (ResNet-50)",
+    "org": "OpenAI",
+    "domain": "Multimodal,Vision,Language,Video",
+    "date": "2021-01-05",
+    "month": "2021-01"
+  },
+  {
+    "model": "CLIP (ViT L/14@336px)",
+    "org": "OpenAI",
+    "domain": "Multimodal,Vision,Language,Video",
+    "date": "2021-01-05",
+    "month": "2021-01"
+  },
+  {
+    "model": "DALL-E",
+    "org": "OpenAI",
+    "domain": "Image generation",
+    "date": "2021-01-05",
+    "month": "2021-01"
+  },
+  {
+    "model": "Very Deep VAEs (ImageNet-64)",
+    "org": "OpenAI",
+    "domain": "Image generation",
+    "date": "2021-03-16",
+    "month": "2021-03"
+  },
+  {
+    "model": "ADM",
+    "org": "OpenAI",
+    "domain": "Image generation",
+    "date": "2021-05-11",
+    "month": "2021-05"
+  },
+  {
+    "model": "GPT2-Large+LHOPT",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2021-06-02",
+    "month": "2021-06"
+  },
+  {
+    "model": "Codex",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2021-07-07",
+    "month": "2021-07"
+  },
+  {
+    "model": "GLIDE",
+    "org": "OpenAI",
+    "domain": "Image generation",
+    "date": "2021-12-20",
+    "month": "2021-12"
+  },
+  {
+    "model": "InstructGPT 1.3B",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2022-01-27",
+    "month": "2022-01"
+  },
+  {
+    "model": "InstructGPT 175B",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2022-01-27",
+    "month": "2022-01"
+  },
+  {
+    "model": "InstructGPT 350M",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2022-01-27",
+    "month": "2022-01"
+  },
+  {
+    "model": "InstructGPT 6B",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2022-01-27",
+    "month": "2022-01"
+  },
+  {
+    "model": "Statement Curriculum Learning",
+    "org": "OpenAI",
+    "domain": "Language,Mathematics",
+    "date": "2022-03-02",
+    "month": "2022-03"
+  },
+  {
+    "model": "GPT3-6.7B + muP",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2022-03-07",
+    "month": "2022-03"
+  },
+  {
+    "model": "GPT-3.5 (davinci-002)\n",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2022-03-15",
+    "month": "2022-03"
+  },
+  {
+    "model": "DALL\u00b7E 2",
+    "org": "OpenAI",
+    "domain": "Image generation",
+    "date": "2022-04-06",
+    "month": "2022-04"
+  },
+  {
+    "model": "WebGPT",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2022-07-01",
+    "month": "2022-07"
+  },
+  {
+    "model": "Whisper",
+    "org": "OpenAI",
+    "domain": "Speech",
+    "date": "2022-09-21",
+    "month": "2022-09"
+  },
+  {
+    "model": "Whisper v2",
+    "org": "OpenAI",
+    "domain": "Speech",
+    "date": "2022-12-05",
+    "month": "2022-12"
+  },
+  {
+    "model": "text-embedding-ada-002",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2022-12-15",
+    "month": "2022-12"
+  },
+  {
+    "model": "Operator",
+    "org": "OpenAI",
+    "domain": "Language,Vision",
+    "date": "2023-01-23",
+    "month": "2023-01"
+  },
+  {
+    "model": "Anthropic LM 175B",
+    "org": "Anthropic",
+    "domain": "Language",
+    "date": "2023-02-15",
+    "month": "2023-02"
+  },
+  {
+    "model": "Consistency Model (CIFAR-10)",
+    "org": "OpenAI",
+    "domain": "Image generation",
+    "date": "2023-03-02",
+    "month": "2023-03"
+  },
+  {
+    "model": "Claude",
+    "org": "Anthropic",
+    "domain": "Language",
+    "date": "2023-03-14",
+    "month": "2023-03"
+  },
+  {
+    "model": "GPT-4 (Jun 2023)",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2023-03-15",
+    "month": "2023-03"
+  },
+  {
+    "model": "GPT-4 (Mar 2023)",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2023-03-15",
+    "month": "2023-03"
+  },
+  {
+    "model": "Anthropic LM 52B",
+    "org": "Anthropic",
+    "domain": "Language",
+    "date": "2023-04-12",
+    "month": "2023-04"
+  },
+  {
+    "model": "Claude 1.3",
+    "org": "Anthropic",
+    "domain": "Language",
+    "date": "2023-04-18",
+    "month": "2023-04"
+  },
+  {
+    "model": "GPT-3.5 Turbo",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2023-06-13",
+    "month": "2023-06"
+  },
+  {
+    "model": "Claude 2",
+    "org": "Anthropic",
+    "domain": "Language",
+    "date": "2023-07-11",
+    "month": "2023-07"
+  },
+  {
+    "model": "Claude Instant",
+    "org": "Anthropic",
+    "domain": "Language",
+    "date": "2023-08-09",
+    "month": "2023-08"
+  },
+  {
+    "model": "GPT-4V",
+    "org": "OpenAI",
+    "domain": "Multimodal,Vision,Language",
+    "date": "2023-09-25",
+    "month": "2023-09"
+  },
+  {
+    "model": "GPT-3.5 Turbo Instruct",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2023-09-28",
+    "month": "2023-09"
+  },
+  {
+    "model": "DALL\u00b7E 3",
+    "org": "OpenAI",
+    "domain": "Image generation",
+    "date": "2023-10-19",
+    "month": "2023-10"
+  },
+  {
+    "model": "Consistency Decoder",
+    "org": "OpenAI",
+    "domain": "Image generation",
+    "date": "2023-11-06",
+    "month": "2023-11"
+  },
+  {
+    "model": "GPT-4 Turbo (Nov 2023)",
+    "org": "OpenAI",
+    "domain": "Multimodal,Vision,Language,Image generation",
+    "date": "2023-11-06",
+    "month": "2023-11"
+  },
+  {
+    "model": "Whisper v3",
+    "org": "OpenAI",
+    "domain": "Speech",
+    "date": "2023-11-06",
+    "month": "2023-11"
+  },
+  {
+    "model": "tts-1",
+    "org": "OpenAI",
+    "domain": "Speech",
+    "date": "2023-11-09",
+    "month": "2023-11"
+  },
+  {
+    "model": "tts-1-hd",
+    "org": "OpenAI",
+    "domain": "Speech",
+    "date": "2023-11-09",
+    "month": "2023-11"
+  },
+  {
+    "model": "Claude 2.1",
+    "org": "Anthropic",
+    "domain": "Language",
+    "date": "2023-11-21",
+    "month": "2023-11"
+  },
+  {
+    "model": "babbage-002",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2024-01-04",
+    "month": "2024-01"
+  },
+  {
+    "model": "text-embedding-3-large",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2024-01-25",
+    "month": "2024-01"
+  },
+  {
+    "model": "text-embedding-3-small",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2024-01-25",
+    "month": "2024-01"
+  },
+  {
+    "model": "Sora",
+    "org": "OpenAI",
+    "domain": "Video,Vision",
+    "date": "2024-02-15",
+    "month": "2024-02"
+  },
+  {
+    "model": "Claude 3 Haiku",
+    "org": "Anthropic",
+    "domain": "Language",
+    "date": "2024-03-04",
+    "month": "2024-03"
+  },
+  {
+    "model": "Claude 3 Opus",
+    "org": "Anthropic",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2024-03-04",
+    "month": "2024-03"
+  },
+  {
+    "model": "Claude 3 Sonnet",
+    "org": "Anthropic",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2024-03-04",
+    "month": "2024-03"
+  },
+  {
+    "model": "Voice Engine",
+    "org": "OpenAI",
+    "domain": "Audio,Speech",
+    "date": "2024-03-29",
+    "month": "2024-03"
+  },
+  {
+    "model": "GPT-4 Turbo (Apr 2024)",
+    "org": "OpenAI",
+    "domain": "Multimodal,Vision,Language,Image generation",
+    "date": "2024-04-09",
+    "month": "2024-04"
+  },
+  {
+    "model": "GPT-4o",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Audio,Speech,Vision",
+    "date": "2024-05-13",
+    "month": "2024-05"
+  },
+  {
+    "model": "Claude 3.5 Sonnet",
+    "org": "Anthropic",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2024-06-20",
+    "month": "2024-06"
+  },
+  {
+    "model": "CriticGPT",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2024-06-27",
+    "month": "2024-06"
+  },
+  {
+    "model": "GPT-4o mini",
+    "org": "OpenAI",
+    "domain": "Language,Multimodal,Vision",
+    "date": "2024-07-18",
+    "month": "2024-07"
+  },
+  {
+    "model": "SearchGPT",
+    "org": "OpenAI",
+    "domain": "Search",
+    "date": "2024-07-25",
+    "month": "2024-07"
+  },
+  {
+    "model": "GPT-4o (Aug 2024)",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Audio,Speech,Vision",
+    "date": "2024-08-06",
+    "month": "2024-08"
+  },
+  {
+    "model": "o1-mini",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2024-09-12",
+    "month": "2024-09"
+  },
+  {
+    "model": "o1-preview",
+    "org": "OpenAI",
+    "domain": "Language,Mathematics,Biology",
+    "date": "2024-09-12",
+    "month": "2024-09"
+  },
+  {
+    "model": "Claude 3.5 Haiku",
+    "org": "Anthropic",
+    "domain": "Language",
+    "date": "2024-10-22",
+    "month": "2024-10"
+  },
+  {
+    "model": "GPT-4o (Nov 2024)",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Audio,Speech,Vision",
+    "date": "2024-11-20",
+    "month": "2024-11"
+  },
+  {
+    "model": "o1",
+    "org": "OpenAI",
+    "domain": "Language,Mathematics,Multimodal",
+    "date": "2024-12-05",
+    "month": "2024-12"
+  },
+  {
+    "model": "Sora Turbo",
+    "org": "OpenAI",
+    "domain": "Video,Vision",
+    "date": "2024-12-09",
+    "month": "2024-12"
+  },
+  {
+    "model": "o3",
+    "org": "OpenAI",
+    "domain": "Language,Vision,Multimodal",
+    "date": "2024-12-20",
+    "month": "2024-12"
+  },
+  {
+    "model": "GPT-4b micro",
+    "org": "OpenAI",
+    "domain": "Biology",
+    "date": "2025-01-17",
+    "month": "2025-01"
+  },
+  {
+    "model": "Computer-Using Agent (CUA)",
+    "org": "OpenAI",
+    "domain": "Vision,Language,Multimodal",
+    "date": "2025-01-23",
+    "month": "2025-01"
+  },
+  {
+    "model": "GPT-4o (Jan 2025)",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Audio,Speech,Vision",
+    "date": "2025-01-29",
+    "month": "2025-01"
+  },
+  {
+    "model": "o3-mini",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2025-01-31",
+    "month": "2025-01"
+  },
+  {
+    "model": "Claude 3.7 Sonnet",
+    "org": "Anthropic",
+    "domain": "Language,Vision,Multimodal",
+    "date": "2025-02-24",
+    "month": "2025-02"
+  },
+  {
+    "model": "GPT-4.5",
+    "org": "OpenAI",
+    "domain": "Language,Vision,Multimodal",
+    "date": "2025-02-27",
+    "month": "2025-02"
+  },
+  {
+    "model": "o1-pro",
+    "org": "OpenAI",
+    "domain": "Language,Mathematics,Multimodal",
+    "date": "2025-03-19",
+    "month": "2025-03"
+  },
+  {
+    "model": "4o Image Generation",
+    "org": "OpenAI",
+    "domain": "Image generation",
+    "date": "2025-03-25",
+    "month": "2025-03"
+  },
+  {
+    "model": "GPT-4o (Mar 2025)",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Audio,Speech,Vision",
+    "date": "2025-03-27",
+    "month": "2025-03"
+  },
+  {
+    "model": "GPT-4.1",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision,Video",
+    "date": "2025-04-14",
+    "month": "2025-04"
+  },
+  {
+    "model": "GPT-4.1 mini",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision,Video",
+    "date": "2025-04-14",
+    "month": "2025-04"
+  },
+  {
+    "model": "GPT-4.1 nano",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision,Video",
+    "date": "2025-04-14",
+    "month": "2025-04"
+  },
+  {
+    "model": "o4-mini",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2025-04-16",
+    "month": "2025-04"
+  },
+  {
+    "model": "gpt-image-1",
+    "org": "OpenAI",
+    "domain": "Image generation,Vision",
+    "date": "2025-04-23",
+    "month": "2025-04"
+  },
+  {
+    "model": "codex-1",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2025-05-16",
+    "month": "2025-05"
+  },
+  {
+    "model": "codex-mini",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2025-05-16",
+    "month": "2025-05"
+  },
+  {
+    "model": "Claude Opus 4",
+    "org": "Anthropic",
+    "domain": "Language,Multimodal,Vision",
+    "date": "2025-05-22",
+    "month": "2025-05"
+  },
+  {
+    "model": "Claude Sonnet 4",
+    "org": "Anthropic",
+    "domain": "Language,Multimodal,Vision",
+    "date": "2025-05-22",
+    "month": "2025-05"
+  },
+  {
+    "model": "o3 Operator",
+    "org": "OpenAI",
+    "domain": "Language,Vision,Multimodal",
+    "date": "2025-05-23",
+    "month": "2025-05"
+  },
+  {
+    "model": "Claude Gov",
+    "org": "Anthropic",
+    "domain": "Language",
+    "date": "2025-06-05",
+    "month": "2025-06"
+  },
+  {
+    "model": "o3-pro",
+    "org": "OpenAI",
+    "domain": "nan",
+    "date": "2025-06-10",
+    "month": "2025-06"
+  },
+  {
+    "model": "ChatGPT agent",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2025-07-17",
+    "month": "2025-07"
+  },
+  {
+    "model": "Claude Opus 4.1",
+    "org": "Anthropic",
+    "domain": "Language,Multimodal,Vision",
+    "date": "2025-08-05",
+    "month": "2025-08"
+  },
+  {
+    "model": "gpt-oss-120b",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2025-08-05",
+    "month": "2025-08"
+  },
+  {
+    "model": "gpt-oss-20b",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2025-08-05",
+    "month": "2025-08"
+  },
+  {
+    "model": "GPT-5",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2025-08-07",
+    "month": "2025-08"
+  },
+  {
+    "model": "GPT-5 mini",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2025-08-07",
+    "month": "2025-08"
+  },
+  {
+    "model": "GPT-5 nano",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2025-08-07",
+    "month": "2025-08"
+  },
+  {
+    "model": "gpt-realtime",
+    "org": "OpenAI",
+    "domain": "Speech,Vision,Language",
+    "date": "2025-08-28",
+    "month": "2025-08"
+  },
+  {
+    "model": "GPT\u20115-Codex",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2025-09-15",
+    "month": "2025-09"
+  },
+  {
+    "model": "Claude Sonnet 4.5",
+    "org": "Anthropic",
+    "domain": "Language,Vision,Multimodal",
+    "date": "2025-09-29",
+    "month": "2025-09"
+  },
+  {
+    "model": "Sora 2.0",
+    "org": "OpenAI",
+    "domain": "Video",
+    "date": "2025-09-30",
+    "month": "2025-09"
+  },
+  {
+    "model": "GPT-5 Pro",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2025-10-07",
+    "month": "2025-10"
+  },
+  {
+    "model": "Claude Haiku 4.5",
+    "org": "Anthropic",
+    "domain": "Language",
+    "date": "2025-10-15",
+    "month": "2025-10"
+  },
+  {
+    "model": "GPT-5.1-Codex",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2025-11-12",
+    "month": "2025-11"
+  },
+  {
+    "model": "GPT-5.1-Codex-mini",
+    "org": "OpenAI",
+    "domain": "Language,Multimodal",
+    "date": "2025-11-12",
+    "month": "2025-11"
+  },
+  {
+    "model": "GPT-5.1",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2025-11-13",
+    "month": "2025-11"
+  },
+  {
+    "model": "GPT-5.1 Instant",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2025-11-13",
+    "month": "2025-11"
+  },
+  {
+    "model": "GPT-5.1-Codex-Max",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2025-11-19",
+    "month": "2025-11"
+  },
+  {
+    "model": "Claude Opus 4.5",
+    "org": "Anthropic",
+    "domain": "Language,Multimodal,Vision",
+    "date": "2025-11-24",
+    "month": "2025-11"
+  },
+  {
+    "model": "GPT-5.2",
+    "org": "OpenAI",
+    "domain": "nan",
+    "date": "2025-12-11",
+    "month": "2025-12"
+  },
+  {
+    "model": "GPT-5.2 Pro",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2025-12-11",
+    "month": "2025-12"
+  },
+  {
+    "model": "GPT-5.2 Codex",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2025-12-18",
+    "month": "2025-12"
+  },
+  {
+    "model": "Claude Opus 4.6",
+    "org": "Anthropic",
+    "domain": "Language,Multimodal,Vision",
+    "date": "2026-02-05",
+    "month": "2026-02"
+  },
+  {
+    "model": "GPT-5.3 Codex",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2026-02-05",
+    "month": "2026-02"
+  },
+  {
+    "model": "Claude Sonnet 4.6",
+    "org": "Anthropic",
+    "domain": "Language,Multimodal,Vision",
+    "date": "2026-02-17",
+    "month": "2026-02"
+  },
+  {
+    "model": "GPT-5.4",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2026-03-05",
+    "month": "2026-03"
+  },
+  {
+    "model": "GPT-5.4 Pro",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2026-03-05",
+    "month": "2026-03"
+  },
+  {
+    "model": "GPT-5.4 Mini",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2026-03-17",
+    "month": "2026-03"
+  },
+  {
+    "model": "GPT-5.4 Nano",
+    "org": "OpenAI",
+    "domain": "Language",
+    "date": "2026-03-17",
+    "month": "2026-03"
+  },
+  {
+    "model": "Claude Opus 4.7",
+    "org": "Anthropic",
+    "domain": "Language",
+    "date": "2026-04-16",
+    "month": "2026-04"
+  },
+  {
+    "model": "GPT Image 2",
+    "org": "OpenAI",
+    "domain": "Image generation",
+    "date": "2026-04-21",
+    "month": "2026-04"
+  },
+  {
+    "model": "GPT-5.5",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2026-04-23",
+    "month": "2026-04"
+  },
+  {
+    "model": "GPT-5.5 Pro",
+    "org": "OpenAI",
+    "domain": "Multimodal,Language,Vision",
+    "date": "2026-04-23",
+    "month": "2026-04"
+  }
+]

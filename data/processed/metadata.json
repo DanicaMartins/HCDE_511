@@ -1,0 +1,12 @@
+{
+  "generated_at": "2026-06-03T13:41:00.495516Z",
+  "validation": {
+    "status": "ok",
+    "errors": [],
+    "warnings": [],
+    "sector_count": 37,
+    "aggregate_months": 75,
+    "latest_aggregate_month": "2026-04"
+  },
+  "ai_model_count": 128
+}

@@ -1,0 +1,8 @@
+{
+  "name": "hcde511-presentation",
+  "private": true,
+  "type": "commonjs",
+  "dependencies": {
+    "pptxgenjs": "^3.12.0"
+  }
+}

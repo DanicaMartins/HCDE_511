@@ -1,0 +1,187 @@
+{
+  "Accounting": {
+    "score": 73,
+    "jobZone": 4.0,
+    "matchedCount": 1
+  },
+  "Administrative Assistance": {
+    "score": 38,
+    "jobZone": 2.1,
+    "matchedCount": 5
+  },
+  "Architecture": {
+    "score": 43,
+    "jobZone": 4.1,
+    "matchedCount": 10
+  },
+  "Arts & Entertainment": {
+    "score": 27,
+    "jobZone": 3.5,
+    "matchedCount": 12
+  },
+  "Banking & Finance": {
+    "score": 50,
+    "jobZone": 3,
+    "matchedCount": 0
+  },
+  "Civil Engineering": {
+    "score": 55,
+    "jobZone": 3.5,
+    "matchedCount": 2
+  },
+  "Cleaning & Sanitation": {
+    "score": 28,
+    "jobZone": 1.9,
+    "matchedCount": 4
+  },
+  "Community & Social Service": {
+    "score": 31,
+    "jobZone": 4.7,
+    "matchedCount": 3
+  },
+  "Customer Service": {
+    "score": 46,
+    "jobZone": 1.5,
+    "matchedCount": 1
+  },
+  "Data & Analytics": {
+    "score": 46,
+    "jobZone": 3.8,
+    "matchedCount": 8
+  },
+  "Education & Instruction": {
+    "score": 21,
+    "jobZone": 4.6,
+    "matchedCount": 50
+  },
+  "Electrical Engineering": {
+    "score": 43,
+    "jobZone": 4.0,
+    "matchedCount": 1
+  },
+  "Food Preparation & Service": {
+    "score": 37,
+    "jobZone": 1.9,
+    "matchedCount": 8
+  },
+  "Hospitality & Tourism": {
+    "score": 39,
+    "jobZone": 2.5,
+    "matchedCount": 4
+  },
+  "Human Resources": {
+    "score": 60,
+    "jobZone": 4.0,
+    "matchedCount": 1
+  },
+  "IT Infrastructure, Operations & Support": {
+    "score": 57,
+    "jobZone": 4.0,
+    "matchedCount": 1
+  },
+  "IT Systems & Solutions": {
+    "score": 57,
+    "jobZone": 4.0,
+    "matchedCount": 1
+  },
+  "Industrial Engineering": {
+    "score": 82,
+    "jobZone": 1.5,
+    "matchedCount": 4
+  },
+  "Installation & Maintenance": {
+    "score": 47,
+    "jobZone": 2.9,
+    "matchedCount": 62
+  },
+  "Legal": {
+    "score": 36,
+    "jobZone": 3.5,
+    "matchedCount": 2
+  },
+  "Loading & Stocking": {
+    "score": 50,
+    "jobZone": 3,
+    "matchedCount": 0
+  },
+  "Logistic Support": {
+    "score": 58,
+    "jobZone": 2.2,
+    "matchedCount": 2
+  },
+  "Management": {
+    "score": 40,
+    "jobZone": 3.9,
+    "matchedCount": 6
+  },
+  "Marketing": {
+    "score": 40,
+    "jobZone": 4.0,
+    "matchedCount": 1
+  },
+  "Media & Communications": {
+    "score": 37,
+    "jobZone": 3.4,
+    "matchedCount": 6
+  },
+  "Medical Information": {
+    "score": 61,
+    "jobZone": 3.0,
+    "matchedCount": 1
+  },
+  "Medical Technician": {
+    "score": 39,
+    "jobZone": 3.0,
+    "matchedCount": 1
+  },
+  "Nursing": {
+    "score": 50,
+    "jobZone": 4.0,
+    "matchedCount": 1
+  },
+  "Pharmacy": {
+    "score": 55,
+    "jobZone": 4.0,
+    "matchedCount": 2
+  },
+  "Physicians & Surgeons": {
+    "score": 32,
+    "jobZone": 5.0,
+    "matchedCount": 10
+  },
+  "Production & Manufacturing": {
+    "score": 50,
+    "jobZone": 1.5,
+    "matchedCount": 19
+  },
+  "Project Management": {
+    "score": 41,
+    "jobZone": 4.0,
+    "matchedCount": 1
+  },
+  "Retail": {
+    "score": 34,
+    "jobZone": 1.5,
+    "matchedCount": 2
+  },
+  "Sales": {
+    "score": 44,
+    "jobZone": 3.7,
+    "matchedCount": 3
+  },
+  "Scientific Research & Development": {
+    "score": 40,
+    "jobZone": 4.5,
+    "matchedCount": 13
+  },
+  "Security & Public Safety": {
+    "score": 43,
+    "jobZone": 1.5,
+    "matchedCount": 1
+  },
+  "Software Development": {
+    "score": 56,
+    "jobZone": 4.0,
+    "matchedCount": 2
+  }
+}

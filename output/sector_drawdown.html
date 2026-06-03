@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sector drawdown from peak</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #F7F5F0;
+      color: #1A1714;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.55;
+      padding: 0 24px 48px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    header { padding: 40px 0 24px; border-bottom: 1px solid #E8E4DC; margin-bottom: 24px; }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 32px;
+      font-weight: normal;
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 22px;
+      font-weight: normal;
+      margin: 32px 0 12px;
+    }
+    .lede { color: #555; max-width: 720px; margin-bottom: 16px; }
+    .methodology {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      font-size: 12px;
+      color: #666;
+      margin: 12px 0 20px;
+      padding: 10px 14px;
+      background: #fff;
+      border: 1px solid #E8E4DC;
+      border-radius: 8px;
+    }
+    .methodology .step {
+      padding: 4px 10px;
+      background: #F7F5F0;
+      border-radius: 4px;
+      white-space: nowrap;
+    }
+    .methodology .arrow { color: #999; }
+    .definitions {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 12px 0 20px;
+      background: #fff;
+      border: 1px solid #E8E4DC;
+      border-radius: 8px;
+      overflow: hidden;
+    }
+    .definitions th, .definitions td {
+      padding: 10px 12px;
+      text-align: left;
+      border-bottom: 1px solid #F0EDE8;
+    }
+    .definitions th {
+      background: #F7F5F0;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: #888;
+    }
+    .callout {
+      background: #fff;
+      border: 1px solid #E8E4DC;
+      border-left: 4px solid #5B8DBF;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin: 16px 0;
+      max-width: 720px;
+    }
+    .callout.warn { border-left-color: #B85040; }
+    .callout strong { display: block; margin-bottom: 6px; }
+    .callout ul { margin: 8px 0 0 18px; color: #444; }
+    .stat-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 800px) {
+      .stat-cards { grid-template-columns: repeat(2, 1fr); }
+    }
+    .stat-card {
+      background: #fff;
+      border: 1px solid #E8E4DC;
+      border-radius: 8px;
+      padding: 14px 16px;
+    }
+    .stat-card .label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #999;
+      margin-bottom: 6px;
+    }
+    .stat-card .value {
+      font-family: Georgia, serif;
+      font-size: 28px;
+      font-weight: bold;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-card .hint { font-size: 12px; color: #777; margin-top: 4px; }
+    .chart-wrap {
+      background: #fff;
+      border: 1px solid #E8E4DC;
+      border-radius: 10px;
+      padding: 12px 8px 4px;
+      margin-bottom: 24px;
+    }
+    .sector-picker {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .sector-picker select {
+      flex: 1;
+      min-width: 200px;
+      padding: 10px 12px;
+      font-size: 14px;
+      border: 1px solid #E8E4DC;
+      border-radius: 8px;
+      background: #fff;
+    }
+    .detail-panel {
+      background: #fff;
+      border: 1px solid #E8E4DC;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin-bottom: 24px;
+    }
+    .detail-panel .row { margin-bottom: 10px; }
+    .detail-panel .label {
+      font-size: 10px;
+      text-transform: uppercase;
+      color: #999;
+      letter-spacing: 0.05em;
+    }
+    .detail-panel .value { font-size: 15px; }
+    .index-above { color: #4A7A5A; font-weight: 600; }
+    .index-below { color: #B85040; font-weight: 600; }
+    footer {
+      margin-top: 24px;
+      font-size: 12px;
+      color: #888;
+      padding-top: 16px;
+      border-top: 1px solid #E8E4DC;
+    }
+    footer a { color: #5B8DBF; }
+    .nav-top { margin-bottom: 16px; font-size: 13px; }
+    .nav-top a { color: #5B8DBF; margin-right: 12px; }
+    .insight-lede { font-size: 16px; color: #333; max-width: 720px; line-height: 1.6; }
+    .measure-section { margin-top: 32px; padding-top: 24px; border-top: 1px solid #E8E4DC; }
+    .measure-section h2 { margin-top: 0; }
+    details.measure-details summary {
+      cursor: pointer;
+      font-family: Georgia, serif;
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: #1A1714;
+    }
+    details.measure-details[open] summary { margin-bottom: 16px; }
+</style>
+</head>
+<body>
+  <div class="nav-top">
+    <a href="guide.html">Guide</a>
+    <a href="explore.html">Explorer</a>
+    <a href="job_index_timeline.html">National timeline</a>
+    <a href="sector_drawdown.html">Sector drawdown</a>
+    <a href="overview.html">Overview</a>
+  </div>
+
+  <header>
+    <h1>Sector drawdown from peak</h1>
+    <p class="insight-lede">The <strong>US total</strong> looks almost back to Feb 2020, but sectors diverge sharply. <strong>Software Development</strong> is still <strong>157 index points</strong> below its peak (February 2022). <strong>Physicians & Surgeons</strong> is closest to its own high (-10 pts). Highlighted bars are example sectors.</p>
+  </header>
+
+
+  <div class="chart-wrap"><div>                        <script>window.PlotlyConfig = {MathJaxConfig: 'local'};</script>
+        <script charset="utf-8" src="https://cdn.plot.ly/plotly-3.5.0.min.js" integrity="sha256-fHbNLP+GlIXN+efbQec78UkemUz3NJp7UmfGxC1tNxs=" crossorigin="anonymous"></script>                <div id="6ed97dd1-1e27-40a6-89ff-12d5fa4fc023" class="plotly-graph-div" style="height:592px; width:100%;"></div>            <script>                window.PLOTLYENV=window.PLOTLYENV || {};                                if (document.getElementById("6ed97dd1-1e27-40a6-89ff-12d5fa4fc023")) {                    Plotly.newPlot(                        "6ed97dd1-1e27-40a6-89ff-12d5fa4fc023",                        [{"customdata":["Peak: 229 (2022-02)\u003cbr\u003eNow: 72 (2026-04)\u003cbr\u003e-68% vs peak","Peak: 241 (2022-03)\u003cbr\u003eNow: 91 (2026-04)\u003cbr\u003e-62% vs peak","Peak: 200 (2022-03)\u003cbr\u003eNow: 63 (2026-04)\u003cbr\u003e-69% vs peak","Peak: 196 (2022-04)\u003cbr\u003eNow: 72 (2026-04)\u003cbr\u003e-63% vs peak","Peak: 185 (2022-03)\u003cbr\u003eNow: 74 (2026-04)\u003cbr\u003e-60% vs peak","Peak: 217 (2022-03)\u003cbr\u003eNow: 107 (2026-04)\u003cbr\u003e-51% vs peak","Peak: 209 (2022-03)\u003cbr\u003eNow: 100 (2026-04)\u003cbr\u003e-52% vs peak","Peak: 186 (2022-03)\u003cbr\u003eNow: 78 (2026-04)\u003cbr\u003e-58% vs peak","Peak: 170 (2022-03)\u003cbr\u003eNow: 62 (2026-04)\u003cbr\u003e-63% vs peak","Peak: 191 (2022-01)\u003cbr\u003eNow: 91 (2026-04)\u003cbr\u003e-52% vs peak","Peak: 193 (2022-05)\u003cbr\u003eNow: 99 (2026-04)\u003cbr\u003e-49% vs peak","Peak: 184 (2022-03)\u003cbr\u003eNow: 93 (2026-04)\u003cbr\u003e-49% vs peak","Peak: 158 (2022-05)\u003cbr\u003eNow: 70 (2026-04)\u003cbr\u003e-56% vs peak","Peak: 202 (2022-03)\u003cbr\u003eNow: 114 (2026-04)\u003cbr\u003e-43% vs peak","Peak: 194 (2021-11)\u003cbr\u003eNow: 107 (2026-04)\u003cbr\u003e-45% vs peak","Peak: 188 (2022-05)\u003cbr\u003eNow: 102 (2026-04)\u003cbr\u003e-46% vs peak","Peak: 188 (2022-05)\u003cbr\u003eNow: 107 (2026-04)\u003cbr\u003e-43% vs peak","Peak: 167 (2022-05)\u003cbr\u003eNow: 88 (2026-04)\u003cbr\u003e-48% vs peak","Peak: 176 (2022-01)\u003cbr\u003eNow: 104 (2026-04)\u003cbr\u003e-41% vs peak","Peak: 170 (2022-05)\u003cbr\u003eNow: 101 (2026-04)\u003cbr\u003e-41% vs peak","Peak: 154 (2022-05)\u003cbr\u003eNow: 84 (2026-04)\u003cbr\u003e-45% vs peak","Peak: 188 (2022-01)\u003cbr\u003eNow: 121 (2026-04)\u003cbr\u003e-36% vs peak","Peak: 183 (2022-05)\u003cbr\u003eNow: 119 (2026-04)\u003cbr\u003e-35% vs peak","Peak: 201 (2022-11)\u003cbr\u003eNow: 140 (2026-04)\u003cbr\u003e-30% vs peak","Peak: 175 (2022-05)\u003cbr\u003eNow: 114 (2026-04)\u003cbr\u003e-35% vs peak","Peak: 165 (2022-05)\u003cbr\u003eNow: 105 (2026-04)\u003cbr\u003e-37% vs peak","Peak: 184 (2022-06)\u003cbr\u003eNow: 126 (2026-04)\u003cbr\u003e-32% vs peak","Peak: 187 (2021-12)\u003cbr\u003eNow: 132 (2026-04)\u003cbr\u003e-30% vs peak","Peak: 143 (2021-12)\u003cbr\u003eNow: 91 (2026-04)\u003cbr\u003e-37% vs peak","Peak: 141 (2022-03)\u003cbr\u003eNow: 89 (2026-04)\u003cbr\u003e-37% vs peak","Peak: 142 (2021-12)\u003cbr\u003eNow: 90 (2026-04)\u003cbr\u003e-36% vs peak","Peak: 148 (2022-03)\u003cbr\u003eNow: 101 (2026-04)\u003cbr\u003e-32% vs peak","Peak: 141 (2022-05)\u003cbr\u003eNow: 97 (2026-04)\u003cbr\u003e-31% vs peak","Peak: 157 (2022-11)\u003cbr\u003eNow: 115 (2026-04)\u003cbr\u003e-27% vs peak","Peak: 164 (2022-08)\u003cbr\u003eNow: 123 (2026-04)\u003cbr\u003e-25% vs peak","Peak: 135 (2022-02)\u003cbr\u003eNow: 94 (2026-04)\u003cbr\u003e-30% vs peak","Peak: 195 (2023-10)\u003cbr\u003eNow: 184 (2026-04)\u003cbr\u003e-5% vs peak"],"hovertemplate":"%{y}\u003cbr\u003eDrawdown: %{x:.1f} pts\u003cbr\u003e%{customdata}\u003cextra\u003e\u003c\u002fextra\u003e","marker":{"color":["#B85040","#B8B0A8","#B8B0A8","#B85040","#B85040","#B8B0A8","#B85040","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B85040","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8","#B8B0A8"]},"orientation":"h","x":[-156.82,-150.04000000000002,-137.57,-123.35999999999999,-110.45000000000002,-109.83,-109.68,-107.76,-107.68,-99.77,-93.96999999999998,-90.52,-88.10000000000001,-87.46000000000001,-86.82000000000001,-85.63999999999999,-81.31,-79.84,-71.54999999999998,-69.62,-69.39,-66.99999999999999,-63.45000000000002,-61.25,-61.0,-60.55,-58.45,-55.650000000000006,-52.39999999999999,-51.790000000000006,-51.480000000000004,-46.95,-43.86999999999999,-41.92999999999999,-41.19999999999999,-40.999999999999986,-10.169999999999987],"y":["Software Development","Human Resources","Data & Analytics","IT Systems & Solutions","Marketing","Logistic Support","Accounting","Scientific Research & Development","Media & Communications","Medical Information","Industrial Engineering","Administrative Assistance","IT Infrastructure, Operations & Support","Production & Manufacturing","Loading & Stocking","Banking & Finance","Project Management","Architecture","Nursing","Cleaning & Sanitation","Arts & Entertainment","Medical Technician","Legal","Civil Engineering","Security & Public Safety","Community & Social Service","Electrical Engineering","Pharmacy","Retail","Hospitality & Tourism","Customer Service","Management","Food Preparation & Service","Installation & Maintenance","Education & Instruction","Sales","Physicians & Surgeons"],"type":"bar"}],                        {"template":{"data":{"histogram2dcontour":[{"type":"histogram2dcontour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"choropleth":[{"type":"choropleth","colorbar":{"outlinewidth":0,"ticks":""}}],"histogram2d":[{"type":"histogram2d","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"heatmap":[{"type":"heatmap","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"contourcarpet":[{"type":"contourcarpet","colorbar":{"outlinewidth":0,"ticks":""}}],"contour":[{"type":"contour","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"surface":[{"type":"surface","colorbar":{"outlinewidth":0,"ticks":""},"colorscale":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]]}],"mesh3d":[{"type":"mesh3d","colorbar":{"outlinewidth":0,"ticks":""}}],"scatter":[{"fillpattern":{"fillmode":"overlay","size":10,"solidity":0.2},"type":"scatter"}],"parcoords":[{"type":"parcoords","line":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolargl":[{"type":"scatterpolargl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"bar":[{"error_x":{"color":"#2a3f5f"},"error_y":{"color":"#2a3f5f"},"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"bar"}],"scattergeo":[{"type":"scattergeo","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterpolar":[{"type":"scatterpolar","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"histogram":[{"marker":{"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"histogram"}],"scattergl":[{"type":"scattergl","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatter3d":[{"type":"scatter3d","line":{"colorbar":{"outlinewidth":0,"ticks":""}},"marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermap":[{"type":"scattermap","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattermapbox":[{"type":"scattermapbox","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scatterternary":[{"type":"scatterternary","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"scattercarpet":[{"type":"scattercarpet","marker":{"colorbar":{"outlinewidth":0,"ticks":""}}}],"carpet":[{"aaxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"baxis":{"endlinecolor":"#2a3f5f","gridcolor":"white","linecolor":"white","minorgridcolor":"white","startlinecolor":"#2a3f5f"},"type":"carpet"}],"table":[{"cells":{"fill":{"color":"#EBF0F8"},"line":{"color":"white"}},"header":{"fill":{"color":"#C8D4E3"},"line":{"color":"white"}},"type":"table"}],"barpolar":[{"marker":{"line":{"color":"#E5ECF6","width":0.5},"pattern":{"fillmode":"overlay","size":10,"solidity":0.2}},"type":"barpolar"}],"pie":[{"automargin":true,"type":"pie"}]},"layout":{"autotypenumbers":"strict","colorway":["#636efa","#EF553B","#00cc96","#ab63fa","#FFA15A","#19d3f3","#FF6692","#B6E880","#FF97FF","#FECB52"],"font":{"color":"#2a3f5f"},"hovermode":"closest","hoverlabel":{"align":"left"},"paper_bgcolor":"white","plot_bgcolor":"#E5ECF6","polar":{"bgcolor":"#E5ECF6","angularaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"radialaxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"ternary":{"bgcolor":"#E5ECF6","aaxis":{"gridcolor":"white","linecolor":"white","ticks":""},"baxis":{"gridcolor":"white","linecolor":"white","ticks":""},"caxis":{"gridcolor":"white","linecolor":"white","ticks":""}},"coloraxis":{"colorbar":{"outlinewidth":0,"ticks":""}},"colorscale":{"sequential":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"sequentialminus":[[0.0,"#0d0887"],[0.1111111111111111,"#46039f"],[0.2222222222222222,"#7201a8"],[0.3333333333333333,"#9c179e"],[0.4444444444444444,"#bd3786"],[0.5555555555555556,"#d8576b"],[0.6666666666666666,"#ed7953"],[0.7777777777777778,"#fb9f3a"],[0.8888888888888888,"#fdca26"],[1.0,"#f0f921"]],"diverging":[[0,"#8e0152"],[0.1,"#c51b7d"],[0.2,"#de77ae"],[0.3,"#f1b6da"],[0.4,"#fde0ef"],[0.5,"#f7f7f7"],[0.6,"#e6f5d0"],[0.7,"#b8e186"],[0.8,"#7fbc41"],[0.9,"#4d9221"],[1,"#276419"]]},"xaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"yaxis":{"gridcolor":"white","linecolor":"white","ticks":"","title":{"standoff":15},"zerolinecolor":"white","automargin":true,"zerolinewidth":2},"scene":{"xaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"yaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2},"zaxis":{"backgroundcolor":"#E5ECF6","gridcolor":"white","linecolor":"white","showbackground":true,"ticks":"","zerolinecolor":"white","gridwidth":2}},"shapedefaults":{"line":{"color":"#2a3f5f"}},"annotationdefaults":{"arrowcolor":"#2a3f5f","arrowhead":0,"arrowwidth":1},"geo":{"bgcolor":"white","landcolor":"#E5ECF6","subunitcolor":"white","showland":true,"showlakes":true,"lakecolor":"white"},"title":{"x":0.05},"mapbox":{"style":"light"}}},"shapes":[{"line":{"color":"#888","width":1},"type":"line","x0":0,"x1":0,"xref":"x","y0":0,"y1":1,"yref":"y domain"}],"title":{"font":{"size":18,"family":"Georgia, serif","color":"#1A1714"},"text":"Distance from each sector\u2019s peak posting index","x":0},"margin":{"l":200,"r":40,"t":60,"b":50},"font":{"family":"Helvetica Neue, sans-serif","color":"#1A1714"},"xaxis":{"title":{"text":"Index points below peak (negative = fewer postings than peak month)"}},"yaxis":{"title":{"text":""},"autorange":"reversed"},"paper_bgcolor":"#F7F5F0","plot_bgcolor":"#FFFFFF","height":592,"showlegend":false},                        {"displayModeBar": true, "responsive": true}                    )                };            </script>        </div></div>
+  
+    <section class="measure-section" aria-labelledby="how-we-measure">
+      <details class="measure-details">
+        <summary id="how-we-measure">How we measure (index &amp; data)</summary>
+        
+    <div class="methodology" aria-label="Data pipeline">
+      <span class="step">Indeed daily CSV</span>
+      <span class="arrow">→</span>
+      <span class="step">Monthly mean (total postings, SA)</span>
+      <span class="arrow">→</span>
+      <span class="step">37 sectors</span>
+      <span class="arrow">→</span>
+      <span class="step">O*NET title match</span>
+      <span class="arrow">→</span>
+      <span class="step">Automation score</span>
+      <span class="arrow">·</span>
+      <span class="step">Rules in repo docs/DATA_RULES.md</span>
+    </div>
+    
+        
+    <div class="callout">
+      <strong>How to read the index</strong>
+      <ul>
+        <li><strong>100</strong> = posting volume on <strong>February 1, 2020</strong>.</li>
+        <li><strong>150</strong> = 50% more postings than that day; <strong>72</strong> = 28% fewer.</li>
+        <li>Compare <em>change over time</em> and across sectors—not whether a value is &ldquo;good.&rdquo;</li>
+      </ul>
+    </div>
+    
+        
+    <table class="definitions">
+      <thead>
+        <tr><th>Metric</th><th>Meaning</th><th>Not</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Posting index</strong></td>
+          <td>% of Feb 1, 2020 posting volume for that series (100 = same day).</td>
+          <td>Raw job count, employment level, or wages.</td>
+        </tr>
+        <tr>
+          <td><strong>Drawdown</strong></td>
+          <td>Current index minus sector peak index (negative = below peak).</td>
+          <td>Permanent job loss count.</td>
+        </tr>
+        <tr>
+          <td><strong>Automation score</strong></td>
+          <td>O*NET &ldquo;degree of automation&rdquo; matched via sector job titles, scaled 0–100.</td>
+          <td>Claude automation vs augmentation (Anthropic metric).</td>
+        </tr>
+        <tr>
+          <td><strong>AI releases</strong></td>
+          <td>OpenAI/Anthropic model publication months (Epoch-style registry).</td>
+          <td>Proof that releases caused posting changes.</td>
+        </tr>
+      </tbody>
+    </table>
+    
+      </details>
+    </section>
+    
+  
+    <section class="measure-section" aria-labelledby="limitations">
+      <h2 id="limitations">Limitations</h2>
+      
+    <div class="callout warn">
+      <strong>What this does not show</strong>
+      <ul>
+        <li>Indeed does not publish raw posting counts in our dataset—only indexed change from Feb 2020.</li>
+        <li>100 is a reference day, not a &ldquo;healthy&rdquo; labor market target.</li>
+        <li>Automation scores use keyword matching; some sectors fall back to a default when no occupation matches.</li>
+        <li>Correlation between AI releases and posting trends is not causation.</li>
+        <li>National totals near 100 in 2026 can hide sectors still far below their 2021–2022 peaks—see drawdown chart.</li>
+      </ul>
+    </div>
+    
+    </section>
+    
+
+  <footer>
+    Data: Indeed Hiring Lab · O*NET · Epoch AI · Feb 2020 baseline.
+    
+    Design patterns informed by
+    <a href="https://www.anthropic.com/economic-index">Anthropic Economic Index</a>
+    and <a href="https://manasvikale99.github.io/ai-viz/">AI &amp; The Job Market</a>.
+    Methodology notes in repo <code>docs/AEI_DESIGN_NOTES.md</code>.
+  </footer>
+</body>
+</html>

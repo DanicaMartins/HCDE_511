@@ -1,0 +1,282 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-serif: Georgia, "Times New Roman", serif;
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+  --background: #ffffff;
+  --foreground: #1a1714;
+  --surface: #ffffff;
+  --surface-muted: #f8f8f8;
+  --border: #e8e4dc;
+  --border-subtle: #f0ede8;
+  --text-muted: #6b6560;
+  --text-secondary: #555555;
+
+  --below-baseline: #b85040;
+  --above-baseline: #4a7a5a;
+  --ai-acceleration: #9b8bb8;
+  --openai: #5b8dbf;
+  --anthropic: #c8714a;
+  --dusty-rose: #e8a0a8;
+  --pale-lavender: #f5f3fa;
+  --accent-ai: #6b4ce6;
+
+  --nav-height: 5rem;
+  --national-extra-height: 280px;
+  --content-max: 76rem;
+  --section-gap: 5rem;
+
+  --text-hero: clamp(3.25rem, 6.5vw, 5.75rem);
+  --text-section: clamp(2.25rem, 3.5vw, 3rem);
+  --text-chart-title: 1.25rem;
+  --text-body: 1rem;
+  --text-label: 0.8125rem;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-size: var(--text-body);
+  line-height: 1.6;
+}
+
+#sector-detail {
+  scroll-margin-top: var(--nav-height);
+}
+
+@layer components {
+  .page-shell {
+    @apply mx-auto min-h-screen w-full max-w-[var(--content-max)] px-6 pb-24 md:px-8;
+  }
+
+  .section-shell {
+    @apply border-t border-border py-20 md:py-24;
+  }
+
+  .card-editorial {
+    @apply rounded-xl border border-border bg-surface shadow-card;
+  }
+
+  .text-hero {
+    font-size: var(--text-hero);
+    line-height: 1.1;
+  }
+
+  .text-section-title {
+    font-size: var(--text-section);
+    line-height: 1.2;
+  }
+
+  .national-viewport {
+    min-height: calc(100vh - var(--nav-height) + var(--national-extra-height));
+    height: auto;
+    overflow: visible;
+    padding-top: 1rem;
+    padding-bottom: 0;
+  }
+
+  .national-rail {
+    @apply flex flex-col self-stretch overflow-y-auto border-r border-border;
+  }
+
+  .national-rail-section {
+    @apply border-b border-border px-5 py-5 last:border-b-0;
+  }
+
+  .national-main {
+    @apply flex min-w-0 flex-1 flex-col overflow-visible;
+  }
+
+  .national-chart-zone {
+    @apply min-h-0 shrink-0 border-b border-border px-4 py-2 md:px-5;
+  }
+
+  .national-sector-zone {
+    @apply shrink-0 px-4 py-3 md:px-5;
+  }
+
+  @media (max-width: 1023px) {
+    .national-viewport {
+      height: auto;
+      min-height: auto;
+      overflow: visible;
+    }
+
+    .national-rail {
+      @apply h-auto max-h-none overflow-visible border-r-0 border-b border-border;
+    }
+
+    .national-main {
+      @apply overflow-visible;
+    }
+  }
+
+  .sector-detail-viewport {
+    min-height: calc(100vh - var(--nav-height));
+    height: auto;
+    overflow: visible;
+    padding-top: 0;
+    padding-bottom: 0;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .sector-detail-rail {
+    @apply flex min-h-0 flex-col overflow-hidden border-r border-border;
+  }
+
+  .sector-detail-rail-list {
+    @apply min-h-0 flex-1 overflow-y-auto px-2 pb-4;
+  }
+
+  .sector-detail-rail-group {
+    @apply border-b border-border-subtle last:border-b-0;
+  }
+
+  .sector-detail-rail-group-label {
+    @apply sticky top-0 z-10 bg-surface;
+  }
+
+  .sector-detail-body {
+    @apply flex min-w-0 flex-1 flex-col overflow-y-auto overflow-x-visible;
+  }
+
+  .sector-detail-chart-row {
+    @apply grid shrink-0 grid-cols-1 overflow-visible border-b border-border lg:grid-cols-[1fr_minmax(176px,196px)];
+  }
+
+  .sector-detail-chart-cell {
+    @apply flex shrink-0 flex-col overflow-visible px-4 py-2 md:px-5;
+  }
+
+  .sector-detail-compare-zone {
+    @apply relative z-0 shrink-0 overflow-visible px-4 py-2 md:px-5;
+  }
+
+  .plot-zoom-chart .js-plotly-plot,
+  .plot-zoom-chart .plotly-graph-div {
+    touch-action: none;
+  }
+
+  .js-plotly-plot .hoverlayer .hovertext {
+    pointer-events: none;
+  }
+
+  .js-plotly-plot .hoverlayer .hovertext path {
+    fill: #1a1714 !important;
+    stroke: rgba(255, 255, 255, 0.08) !important;
+    stroke-width: 1px !important;
+  }
+
+  .js-plotly-plot .hoverlayer .hovertext text,
+  .js-plotly-plot .hoverlayer .hovertext tspan {
+    fill: #f7f5f0 !important;
+    font-size: 13px !important;
+  }
+
+  @media (max-width: 1023px) {
+    .sector-detail-viewport {
+      height: auto;
+      min-height: auto;
+      overflow: visible;
+    }
+
+    .sector-detail-body {
+      @apply overflow-visible;
+    }
+
+    .sector-detail-chart-row {
+      @apply flex-none;
+    }
+  }
+
+  .category-heatmap-viewport {
+    min-height: calc(100vh - var(--nav-height));
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .category-heatmap-rail {
+    @apply min-h-0;
+  }
+
+  .category-heatmap-main {
+    @apply min-h-0;
+  }
+
+  @media (max-width: 1023px) {
+    .category-heatmap-viewport {
+      min-height: auto;
+    }
+  }
+
+  .automation-quadrant-chart {
+    background: linear-gradient(165deg, #faf9f7 0%, #ffffff 42%, #f7f5f2 100%);
+    padding: 0.5rem 0.25rem 0.25rem;
+    animation: automation-frame-in 0.5s ease-out both;
+  }
+
+  .automation-quadrant-chart__wash {
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(255, 255, 255, 0.5), transparent 70%);
+  }
+
+  @keyframes automation-frame-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .automation-quadrant-chart {
+      animation: none;
+    }
+  }
+}
+
+@layer utilities {
+  .reveal-pending {
+    opacity: 0;
+    transform: translateY(1.75rem);
+  }
+
+  .reveal-visible {
+    opacity: 1;
+    transform: translateY(0);
+    transition:
+      opacity var(--reveal-duration, 750ms) cubic-bezier(0.22, 1, 0.36, 1),
+      transform var(--reveal-duration, 750ms) cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal-pending,
+    .reveal-visible {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .animate-fade-up,
+    .animate-fade-in {
+      animation: none !important;
+    }
+  }
+
+  .cursor-pixel-reveal {
+    touch-action: none;
+    image-rendering: pixelated;
+  }
+}
