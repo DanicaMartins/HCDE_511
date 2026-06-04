@@ -152,14 +152,16 @@ export function CursorPixelReveal({
   excludeSelector = DEFAULT_EXCLUDE_SELECTOR,
 }: CursorPixelRevealProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const bgCanvasRef = useRef<HTMLCanvasElement>(null);
+  const overlayCanvasRef = useRef<HTMLCanvasElement>(null);
   const [ready, setReady] = useState(false);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
     const container = containerRef.current;
-    const canvas = canvasRef.current;
-    if (!section || !container || !canvas) return;
+    const bgCanvas = bgCanvasRef.current;
+    const overlayCanvas = overlayCanvasRef.current;
+    if (!section || !container || !bgCanvas || !overlayCanvas) return;
 
     let rafId = 0;
     let cancelled = false;
@@ -168,7 +170,8 @@ export function CursorPixelReveal({
     const pixels = new Map<string, PixelStamp>();
     let lastStampAt = 0;
     let size = { width: 0, height: 0, maxActiveCells: 0 };
-    let ctx: CanvasRenderingContext2D | null = null;
+    let bgCtx: CanvasRenderingContext2D | null = null;
+    let overlayCtx: CanvasRenderingContext2D | null = null;
 
     const bgImage = new Image();
     bgImage.decoding = "async";
@@ -178,13 +181,19 @@ export function CursorPixelReveal({
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const resizeCanvas = (width: number, height: number) => {
+    const resizeCanvases = (width: number, height: number) => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.max(1, Math.floor(width * dpr));
-      canvas.height = Math.max(1, Math.floor(height * dpr));
-      canvas.style.width = `${width}px`;
-      canvas.style.height = `${height}px`;
-      ctx = canvas.getContext("2d");
+
+      for (const canvas of [bgCanvas, overlayCanvas]) {
+        canvas.width = Math.max(1, Math.floor(width * dpr));
+        canvas.height = Math.max(1, Math.floor(height * dpr));
+        canvas.style.width = `${width}px`;
+        canvas.style.height = `${height}px`;
+      }
+
+      bgCtx = bgCanvas.getContext("2d");
+      overlayCtx = overlayCanvas.getContext("2d", { alpha: true });
+
       const cellCount = Math.ceil(width / CELL_SIZE) * Math.ceil(height / CELL_SIZE);
       size = {
         width,
@@ -194,25 +203,27 @@ export function CursorPixelReveal({
       pixels.clear();
     };
 
-    const getExclusionRects = () =>
-      Array.from(section.querySelectorAll(excludeSelector)).map((el) =>
-        el.getBoundingClientRect(),
-      );
-
-    const draw = (now: number) => {
-      if (!ctx || !bgReady || size.width <= 0 || size.height <= 0) return;
+    const drawBackground = () => {
+      if (!bgCtx || !bgReady || size.width <= 0 || size.height <= 0) return;
 
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.globalAlpha = 1;
-      ctx.globalCompositeOperation = "source-over";
+      bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      bgCtx.clearRect(0, 0, size.width, size.height);
+      drawImageCover(bgCtx, bgImage, size.width, size.height);
+    };
 
-      drawImageCover(ctx, bgImage, size.width, size.height);
-      ctx.fillStyle = OVERLAY_COLOR;
-      ctx.fillRect(0, 0, size.width, size.height);
+    const drawOverlay = (now: number) => {
+      if (!overlayCtx || !bgReady || size.width <= 0 || size.height <= 0) return;
+
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      overlayCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      overlayCtx.globalCompositeOperation = "source-over";
+      overlayCtx.globalAlpha = 1;
+      overlayCtx.fillStyle = OVERLAY_COLOR;
+      overlayCtx.fillRect(0, 0, size.width, size.height);
 
       if (!reducedMotion) {
-        const context = ctx;
+        overlayCtx.globalCompositeOperation = "destination-out";
         Array.from(pixels.entries()).forEach(([key, pixel]) => {
           const age = now - pixel.t;
           if (age >= FADE_MS) {
@@ -221,14 +232,10 @@ export function CursorPixelReveal({
           }
 
           const strength = 1 - age / FADE_MS;
-          context.save();
-          context.beginPath();
-          context.rect(pixel.px, pixel.py, pixel.pw, pixel.ph);
-          context.clip();
-          context.globalAlpha = strength;
-          drawImageCover(context, bgImage, size.width, size.height);
-          context.restore();
+          overlayCtx!.fillStyle = `rgba(0,0,0,${strength})`;
+          overlayCtx!.fillRect(pixel.px, pixel.py, pixel.pw, pixel.ph);
         });
+        overlayCtx.globalCompositeOperation = "source-over";
       }
 
       if (!hasPainted) {
@@ -237,11 +244,21 @@ export function CursorPixelReveal({
       }
     };
 
+    const draw = (now: number) => {
+      drawBackground();
+      drawOverlay(now);
+    };
+
     const tick = (now: number) => {
       if (cancelled) return;
-      draw(now);
+      drawOverlay(now);
       rafId = window.requestAnimationFrame(tick);
     };
+
+    const getExclusionRects = () =>
+      Array.from(section.querySelectorAll(excludeSelector)).map((el) =>
+        el.getBoundingClientRect(),
+      );
 
     const stampAtPointer = (clientX: number, clientY: number, now: number) => {
       if (reducedMotion || !bgReady || size.width <= 0) return;
@@ -285,9 +302,10 @@ export function CursorPixelReveal({
       const { width, height } = measure();
       if (width <= 0 || height <= 0) return false;
       if (width !== size.width || height !== size.height) {
-        resizeCanvas(width, height);
+        resizeCanvases(width, height);
+        drawBackground();
       }
-      draw(performance.now());
+      drawOverlay(performance.now());
       return true;
     };
 
@@ -335,11 +353,18 @@ export function CursorPixelReveal({
   }, [backgroundSrc, excludeSelector, sectionRef]);
 
   return (
-    <div ref={containerRef} className={cn("absolute inset-0", className)} aria-hidden>
-      {!ready && <div className="absolute inset-0 bg-white" aria-hidden />}
+    <div ref={containerRef} className={cn("absolute inset-0 z-0", className)} aria-hidden>
+      {!ready && <div className="absolute inset-0 z-[2] bg-white" aria-hidden />}
       <canvas
-        ref={canvasRef}
+        ref={bgCanvasRef}
+        className="pointer-events-none absolute inset-0 block h-full w-full"
+        style={{ zIndex: 0 }}
+        aria-hidden
+      />
+      <canvas
+        ref={overlayCanvasRef}
         className="cursor-pixel-reveal pointer-events-none absolute inset-0 block h-full w-full"
+        style={{ zIndex: 1 }}
         aria-hidden
       />
     </div>
