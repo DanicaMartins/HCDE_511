@@ -17,11 +17,7 @@ export function HeroSection() {
       id="hero"
       className="relative isolate -mx-6 flex min-h-[calc(100vh-var(--nav-height))] flex-col justify-center overflow-hidden pb-8 md:-mx-8"
     >
-      <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden>
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url(/images/hero-background.png)" }}
-        />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
         <HeroCursorReveal sectionRef={sectionRef} />
       </div>
 

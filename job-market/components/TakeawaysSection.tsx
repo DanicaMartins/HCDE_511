@@ -28,11 +28,7 @@ export function TakeawaysSection() {
       id="takeaways"
       className="section-shell relative isolate overflow-hidden"
     >
-      <div className="absolute inset-0 z-0 overflow-hidden" aria-hidden>
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url(/images/hero-background.png)" }}
-        />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
         <CursorPixelReveal sectionRef={sectionRef} />
       </div>
 
