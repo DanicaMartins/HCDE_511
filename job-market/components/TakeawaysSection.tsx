@@ -28,9 +28,7 @@ export function TakeawaysSection() {
       id="takeaways"
       className="section-shell relative isolate overflow-hidden"
     >
-      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-        <CursorPixelReveal sectionRef={sectionRef} />
-      </div>
+      <CursorPixelReveal sectionRef={sectionRef} />
 
       <div className="relative z-10">
         <div data-cursor-exclude>

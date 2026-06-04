@@ -17,9 +17,7 @@ export function HeroSection() {
       id="hero"
       className="relative isolate -mx-6 flex min-h-[calc(100vh-var(--nav-height))] flex-col justify-center overflow-hidden pb-8 md:-mx-8"
     >
-      <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
-        <HeroCursorReveal sectionRef={sectionRef} />
-      </div>
+      <HeroCursorReveal sectionRef={sectionRef} />
 
       <div className="relative z-10 px-6 md:px-8">
         <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between sm:gap-10 lg:gap-16">

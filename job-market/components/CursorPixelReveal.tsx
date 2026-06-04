@@ -37,12 +37,12 @@ function cellPixelRect(col: number, row: number) {
 function pointInRects(
   x: number,
   y: number,
-  sectionRect: DOMRect,
+  containerRect: DOMRect,
   exclusionRects: DOMRect[],
   padding = 14,
 ) {
-  const px = sectionRect.left + x;
-  const py = sectionRect.top + y;
+  const px = containerRect.left + x;
+  const py = containerRect.top + y;
   return exclusionRects.some(
     (rect) =>
       px >= rect.left - padding &&
@@ -50,6 +50,18 @@ function pointInRects(
       py >= rect.top - padding &&
       py <= rect.bottom + padding,
   );
+}
+
+function evictOldestStamp(pixels: Map<string, PixelStamp>) {
+  let oldestKey: string | null = null;
+  let oldestTime = Infinity;
+  pixels.forEach((stamp, key) => {
+    if (stamp.t < oldestTime) {
+      oldestTime = stamp.t;
+      oldestKey = key;
+    }
+  });
+  if (oldestKey) pixels.delete(oldestKey);
 }
 
 function stampBrush(
@@ -60,7 +72,7 @@ function stampBrush(
   height: number,
   now: number,
   exclusionRects: DOMRect[],
-  sectionRect: DOMRect,
+  containerRect: DOMRect,
   maxActiveCells: number,
 ) {
   const centerCol = Math.floor(x / CELL_SIZE);
@@ -79,10 +91,12 @@ function stampBrush(
       const { px, py, pw, ph } = cellPixelRect(col, row);
       const cx = px + pw / 2;
       const cy = py + ph / 2;
-      if (pointInRects(cx, cy, sectionRect, exclusionRects)) continue;
+      if (pointInRects(cx, cy, containerRect, exclusionRects)) continue;
 
       const key = cellKey(col, row);
-      if (!pixels.has(key) && pixels.size >= maxActiveCells) continue;
+      if (!pixels.has(key) && pixels.size >= maxActiveCells) {
+        evictOldestStamp(pixels);
+      }
 
       pixels.set(key, { t: now, px, py, pw, ph });
     }
@@ -120,6 +134,10 @@ function drawImageCover(
   ctx.drawImage(image, sx, sy, sw, sh, 0, 0, width, height);
 }
 
+function isInsideRect(x: number, y: number, rect: DOMRect) {
+  return x >= rect.left && x <= rect.right && y >= rect.top && y <= rect.bottom;
+}
+
 type CursorPixelRevealProps = {
   className?: string;
   sectionRef: RefObject<HTMLElement | null>;
@@ -133,13 +151,15 @@ export function CursorPixelReveal({
   backgroundSrc = DEFAULT_BACKGROUND,
   excludeSelector = DEFAULT_EXCLUDE_SELECTOR,
 }: CursorPixelRevealProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [ready, setReady] = useState(false);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
+    const container = containerRef.current;
     const canvas = canvasRef.current;
-    if (!section || !canvas) return;
+    if (!section || !container || !canvas) return;
 
     let rafId = 0;
     let cancelled = false;
@@ -191,7 +211,7 @@ export function CursorPixelReveal({
       ctx.fillStyle = OVERLAY_COLOR;
       ctx.fillRect(0, 0, size.width, size.height);
 
-      if (!reducedMotion && ctx) {
+      if (!reducedMotion) {
         const context = ctx;
         Array.from(pixels.entries()).forEach(([key, pixel]) => {
           const age = now - pixel.t;
@@ -223,13 +243,14 @@ export function CursorPixelReveal({
       rafId = window.requestAnimationFrame(tick);
     };
 
-    const stampAtCursor = (clientX: number, clientY: number, now: number) => {
-      if (reducedMotion) return;
+    const stampAtPointer = (clientX: number, clientY: number, now: number) => {
+      if (reducedMotion || !bgReady || size.width <= 0) return;
 
-      const sectionRect = section.getBoundingClientRect();
-      const x = clientX - sectionRect.left;
-      const y = clientY - sectionRect.top;
-      if (x < 0 || y < 0 || x > sectionRect.width || y > sectionRect.height) return;
+      const containerRect = container.getBoundingClientRect();
+      if (!isInsideRect(clientX, clientY, containerRect)) return;
+
+      const x = clientX - containerRect.left;
+      const y = clientY - containerRect.top;
 
       stampBrush(
         pixels,
@@ -239,24 +260,24 @@ export function CursorPixelReveal({
         size.height,
         now,
         getExclusionRects(),
-        sectionRect,
+        containerRect,
         size.maxActiveCells,
       );
     };
 
-    const onPointerMove = (event: PointerEvent) => {
+    const onPointer = (event: PointerEvent) => {
       if (reducedMotion || !bgReady || size.width <= 0) return;
 
       const now = performance.now();
-      if (now - lastStampAt < STAMP_MIN_MS) return;
+      if (event.type === "pointermove" && now - lastStampAt < STAMP_MIN_MS) return;
       lastStampAt = now;
-      stampAtCursor(event.clientX, event.clientY, now);
+      stampAtPointer(event.clientX, event.clientY, now);
     };
 
     const measure = () => {
-      const rect = section.getBoundingClientRect();
-      const width = rect.width || section.clientWidth;
-      const height = rect.height || section.clientHeight;
+      const rect = container.getBoundingClientRect();
+      const width = rect.width || container.clientWidth;
+      const height = rect.height || container.clientHeight;
       return { width, height };
     };
 
@@ -287,8 +308,9 @@ export function CursorPixelReveal({
       syncSize();
     });
 
-    resizeObserver.observe(section);
-    section.addEventListener("pointermove", onPointerMove, { capture: true, passive: true });
+    resizeObserver.observe(container);
+    window.addEventListener("pointermove", onPointer, { passive: true });
+    window.addEventListener("pointerdown", onPointer, { passive: true });
 
     if (bgImage.complete && bgImage.naturalWidth > 0) {
       onBgLoad();
@@ -305,28 +327,22 @@ export function CursorPixelReveal({
       setReady(false);
       window.cancelAnimationFrame(rafId);
       resizeObserver.disconnect();
-      section.removeEventListener("pointermove", onPointerMove, { capture: true });
+      window.removeEventListener("pointermove", onPointer);
+      window.removeEventListener("pointerdown", onPointer);
       bgImage.onload = null;
       bgImage.onerror = null;
     };
   }, [backgroundSrc, excludeSelector, sectionRef]);
 
   return (
-    <>
-      {!ready && (
-        <div
-          className="pointer-events-none absolute inset-0 bg-white"
-          style={{ zIndex: 1 }}
-          aria-hidden
-        />
-      )}
+    <div ref={containerRef} className={cn("absolute inset-0", className)} aria-hidden>
+      {!ready && <div className="absolute inset-0 bg-white" aria-hidden />}
       <canvas
         ref={canvasRef}
-        className={cn("cursor-pixel-reveal pointer-events-none block h-full w-full", className)}
-        style={{ position: "absolute", inset: 0, zIndex: 1 }}
+        className="cursor-pixel-reveal pointer-events-none absolute inset-0 block h-full w-full"
         aria-hidden
       />
-    </>
+    </div>
   );
 }
 
